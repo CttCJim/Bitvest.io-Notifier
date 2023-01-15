@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Bitvest Notifier
 // @namespace    http://tampermonkey.net/
-// @version      1.0
-// @description  try to take over the world!
+// @version      1.1
+// @description  Notify the user when a PM is received on bitvest.io
 // @author       CttCJim
 // @match        https://bitvest.io/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bitvest.io
@@ -12,7 +12,6 @@
 
 (function() {
     'use strict';
-
     //get name
     var me = document.getElementsByClassName("self-username")[0].innerHTML;
     //-----------------------------------
@@ -37,18 +36,21 @@
     }
     var oldhighest = 0;
     setInterval(function(){
-        var newhighest = getLastMsg(oldhighest);
-        console.log(newhighest);
-        if(oldhighest==0) {
+        if(document.hasFocus()) {return;} //abort if you are already in the window
+        var newhighest = getLastMsg(oldhighest); //get most recent PM's index
+        if(oldhighest==0) { //script just started; initialize and don't alert
             oldhighest=newhighest;
             //do nothing
         }
-        if(oldhighest!=newhighest) {
+        if(oldhighest!=newhighest) { //latest message is a new one
             oldhighest=newhighest;
             //get the message
             var msgbox = document.getElementById("chat_"+newhighest);
-            var msgtext = msgbox.lastChild.innerHTML;
-            var senderlink = msgbox.firstChild.href.split("#");
+            //var msgtext = msgbox.lastChild.innerHTML;
+            var msgtext = msgbox.getElementsByClassName('pm-body')[0].innerHTML;
+            var firsttag = msgbox.getElementsByTagName('a')[0];
+            //var senderlink = msgbox.firstChild.href.split("#");
+            var senderlink = firsttag.href.split("#");
             var sendername = senderlink[senderlink.length-1].split(",")[1];
             sendername = sendername.replace("%20"," ");
             //forward the message to GM_notifiction
