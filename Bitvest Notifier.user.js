@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bitvest Notifier
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.1.1
 // @description  Notify the user when a PM is received on bitvest.io
 // @author       CttCJim
 // @match        https://bitvest.io/*
@@ -22,7 +22,9 @@
             //get parent
             var parentbox = allchats[i].parentElement;
             //check sender != me
-            var senderlink = parentbox.firstChild.href.split("#"); //[ "https://bitvest.io/?custom=1250,200,50,20,5.8,0,0,0,0,0,0,0,5.8,20,50,200,1250", "user,RainBot" ]
+            var firsttag = msgbox.getElementsByTagName('a')[0];
+            //var senderlink = msgbox.firstChild.href.split("#");
+            var senderlink = firsttag.href.split("#");
             var sendername = senderlink[senderlink.length-1].split(",")[1]; //gets username, aka RainBot
             if(sendername==me) {continue;} else {
                 var thisid = parentbox.id.replace("chat_","");
