@@ -22,7 +22,7 @@
             //get parent
             var parentbox = allchats[i].parentElement;
             //check sender != me
-            var firsttag = msgbox.getElementsByTagName('a')[0];
+            var firsttag = parentbox.getElementsByTagName('a')[0];
             //var senderlink = msgbox.firstChild.href.split("#");
             var senderlink = firsttag.href.split("#");
             var sendername = senderlink[senderlink.length-1].split(",")[1]; //gets username, aka RainBot
