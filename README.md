@@ -1,4 +1,4 @@
-# Bitvest.io-Notifier
+# Bitvest.io-PM-Notifier
 Tampermonkey script; pops up a desktop notification if user receives a direct message on bitvest.io
 
 NOTE: You will need the Tampermonkey plugin installed.
