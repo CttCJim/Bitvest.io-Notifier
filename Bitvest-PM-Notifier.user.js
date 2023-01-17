@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Bitvest Notifier
+// @name         Bitvest PM Notifier
 // @namespace    http://tampermonkey.net/
-// @version      1.1.1
+// @version      1.1.2
 // @description  Notify the user when a PM is received on bitvest.io
 // @author       CttCJim
 // @match        https://bitvest.io/*
@@ -38,8 +38,11 @@
     }
     var oldhighest = 0;
     setInterval(function(){
-        if(document.hasFocus()) {return;} //abort if you are already in the window
         var newhighest = getLastMsg(oldhighest); //get most recent PM's index
+        if(document.hasFocus()) {
+            oldhighest=newhighest;
+            return;
+        } //abort if you are already in the window
         if(oldhighest==0) { //script just started; initialize and don't alert
             oldhighest=newhighest;
             //do nothing
